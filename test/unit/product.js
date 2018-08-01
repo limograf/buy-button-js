@@ -807,13 +807,13 @@ describe('Product class', () => {
       product.config.product.buttonDestination = 'checkout';
 
       const openWindow = sinon.stub(window, 'open').returns({location: ''});
-      const checkoutId = '1';
+      const checkoutMock = {id: 1, webUrl: ''};
 
       let createCheckout;
       const createCheckoutPromise = new Promise((resolve) => {
         createCheckout = sinon.stub(product.props.client.checkout, 'create', () => {
           resolve();
-          return Promise.resolve({id: checkoutId});
+          return Promise.resolve(checkoutMock);
         });
       });
 
@@ -821,7 +821,7 @@ describe('Product class', () => {
       const addLineItemsPromise = new Promise((resolve) => {
         addLineItems = sinon.stub(product.props.client.checkout, 'addLineItems', () => {
           resolve();
-          return Promise.resolve({webUrl: ''});
+          return Promise.resolve(checkoutMock);
         });
       });
 
@@ -832,7 +832,7 @@ describe('Product class', () => {
         assert.calledOnce(openWindow);
         assert.calledOnce(createCheckout);
         assert.calledOnce(addLineItems);
-        assert.calledWith(addLineItems, checkoutId, [{
+        assert.calledWith(addLineItems, checkoutMock.id, [{
           variantId: "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8xMjM0NQ==",
           quantity: 1,
         }]);
