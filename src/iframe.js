@@ -10,6 +10,7 @@ const iframeStyles = {
 };
 
 const iframeAttrs = {
+  title: 'Shop',
   horizontalscrolling: 'no',
   verticalscrolling: 'no',
   allowTransparency: 'true',
